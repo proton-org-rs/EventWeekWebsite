@@ -1,9 +1,47 @@
 /* =================================================================
-   PROTON EVENTWEEK — Main Script
+   PROTON EVENTWEEK - Main Script
    Vanilla JS, no heavy frameworks
    ================================================================= */
 
 'use strict';
+
+/* ─── 0. THEME (system default + user override) ─────────────── */
+const THEME_KEY = 'eventweek-theme';
+const themeToggle = document.getElementById('theme-toggle');
+const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+function setTheme(theme) {
+  document.body.setAttribute('data-theme', theme);
+  if (!themeToggle) return;
+  const nextTheme = theme === 'dark' ? 'light' : 'dark';
+  themeToggle.setAttribute('aria-label', `Promeni temu na ${nextTheme === 'dark' ? 'tamnu' : 'svetlu'}`);
+  themeToggle.setAttribute('title', `Promeni temu na ${nextTheme === 'dark' ? 'tamnu' : 'svetlu'}`);
+}
+
+function getSystemTheme() {
+  return prefersDarkScheme.matches ? 'dark' : 'light';
+}
+
+function initTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  const initialTheme = saved === 'dark' || saved === 'light' ? saved : getSystemTheme();
+  setTheme(initialTheme);
+
+  // Follow system changes only when the user has not manually selected a theme
+  prefersDarkScheme.addEventListener('change', e => {
+    if (localStorage.getItem(THEME_KEY)) return;
+    setTheme(e.matches ? 'dark' : 'light');
+  });
+
+  themeToggle?.addEventListener('click', () => {
+    const current = document.body.getAttribute('data-theme') || getSystemTheme();
+    const next = current === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    localStorage.setItem(THEME_KEY, next);
+  });
+}
+
+initTheme();
 
 /* ─── 1. LOADING SCREEN ──────────────────────────────────────── */
 window.addEventListener('load', () => {

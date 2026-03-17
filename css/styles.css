@@ -1,5 +1,5 @@
 /* =================================================================
-  PROTON EVENTWEEK — Main Stylesheet
+  PROTON EVENTWEEK - Main Stylesheet
   Mobile-first, dark theme, glassmorphism accents
   ================================================================= */
 
@@ -39,6 +39,71 @@
 
   --nav-h: 68px;
   --ease:  cubic-bezier(.4,0,.2,1);
+
+  --nav-scrolled-bg: rgba(8,8,8,.85);
+  --menu-bg: rgba(8,8,8,.96);
+  --footer-bg: #050505;
+}
+
+/* Light theme overrides */
+body[data-theme='light'] {
+  --clr-primary:   #7c3aed;
+  --clr-primary-d: #6d28d9;
+  --clr-primary-l: #8b5cf6;
+  --clr-accent:    #ede9fe;
+  --clr-secondary: #ede9fe;
+  --clr-sec-light: #ddd6fe;
+
+  --bg:            #f7f8fb;
+  --bg-alt:        #eef1f6;
+  --bg-card:       rgba(255,255,255,.84);
+  --bg-card-h:     rgba(255,255,255,.98);
+  --glass:         rgba(255,255,255,.62);
+  --glass-border:  rgba(15,23,42,.14);
+
+  --text:          #121420;
+  --text-2:        rgba(18,20,32,.75);
+  --text-3:        rgba(18,20,32,.5);
+
+  --shadow-s:  0 2px  8px rgba(15,23,42,.08);
+  --shadow-m:  0 8px 24px rgba(15,23,42,.12);
+  --shadow-l:  0 20px 50px rgba(15,23,42,.14);
+
+  --nav-scrolled-bg: rgba(255,255,255,.86);
+  --menu-bg: rgba(255,255,255,.96);
+  --footer-bg: #eceff5;
+}
+
+body[data-theme='light'] .why-section {
+  background: linear-gradient(180deg, #ede9fe 0%, #e9ecf4 100%);
+}
+
+body[data-theme='light'] .why-section::before {
+  background: radial-gradient(ellipse 70% 60% at 80% 50%, rgba(124,58,237,.12) 0%, transparent 60%);
+}
+
+body[data-theme='light'] .why-card {
+  background: rgba(255,255,255,.75);
+  border: 1px solid rgba(124,58,237,.16);
+  box-shadow: var(--shadow-s);
+}
+
+body[data-theme='light'] .why-card h3 {
+  color: var(--text);
+}
+
+body[data-theme='light'] .why-card p {
+  color: var(--text-2);
+}
+
+body[data-theme='light'] .why-icon svg [stroke="#f5c133"],
+body[data-theme='light'] .why-icon svg [fill="#f5c133"] {
+  stroke: var(--clr-primary) !important;
+  fill: var(--clr-primary) !important;
+}
+
+body[data-theme='light'] .why-icon svg [fill="rgba(245,193,51,.12)"] {
+  fill: rgba(124,58,237,.15) !important;
 }
 
 /* ─── 2. RESET & BASE ──────────────────────────────────────────── */
@@ -192,10 +257,10 @@ h1,h2,h3,h4 {
   border-bottom: 1px solid transparent;
 }
 #navbar.scrolled {
-  background: rgba(8,8,8,.85);
+  background: var(--nav-scrolled-bg);
   backdrop-filter: blur(18px) saturate(180%);
   -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border-bottom-color: rgba(255,255,255,.06);
+  border-bottom-color: var(--glass-border);
   box-shadow: 0 4px 30px rgba(0,0,0,.4);
 }
 .nav-container {
@@ -266,6 +331,10 @@ h1,h2,h3,h4 {
 .theme-btn:hover { color: var(--clr-primary); border-color: var(--clr-primary); background: rgba(245,193,51,.08); }
 .theme-btn svg { width: 17px; height: 17px; }
 
+.theme-btn .icon-moon { display: none; }
+body[data-theme='light'] .theme-btn .icon-moon { display: block; }
+body[data-theme='light'] .theme-btn .icon-sun { display: none; }
+
 /* Hamburger */
 .hamburger {
   display: flex;
@@ -292,7 +361,7 @@ h1,h2,h3,h4 {
   flex-direction: column;
   padding: 0 24px;
   gap: 4px;
-  background: rgba(8,8,8,.96);
+  background: var(--menu-bg);
   border-top: 1px solid var(--glass-border);
   backdrop-filter: blur(16px);
   max-height: 0;
@@ -611,6 +680,25 @@ h1,h2,h3,h4 {
   line-height: 1.65;
 }
 
+.schedule-calendar-cta {
+  margin: 18px auto 0;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.schedule-calendar-cta p {
+  font-size: .92rem;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.btn-calendar {
+  padding: 10px 20px;
+}
+
 /* Events grid */
 .events-grid {
   display: grid;
@@ -641,7 +729,7 @@ h1,h2,h3,h4 {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 16px;
+  gap: 18px;
   padding: 20px 20px 0;
   flex-wrap: wrap;
 }
@@ -671,9 +759,33 @@ h1,h2,h3,h4 {
 .card-meta {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  font-size: .78rem;
-  color: var(--text-3);
+  gap: 8px;
+  font-size: .88rem;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+.card-meta span {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.card-meta span:first-child {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.card-meta a {
+  color: var(--text-2);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.card-meta a:hover,
+.card-meta a:focus-visible {
+  color: var(--clr-primary);
 }
 
 /* Card – body */
@@ -738,6 +850,11 @@ h1,h2,h3,h4 {
   background: var(--clr-primary-l);
   box-shadow: 0 4px 18px rgba(245,193,51,.4);
   transform: translateY(-2px) scale(1.03);
+}
+
+body[data-theme='light'] .btn-primary,
+body[data-theme='light'] .btn-register {
+  color: #ffffff;
 }
 .btn-photos {
   background: var(--bg-card);
@@ -1007,7 +1124,13 @@ h1,h2,h3,h4 {
   backdrop-filter: blur(8px);
 }
 
-.organizer-logo-col { text-align: center; }
+.organizer-logo-col {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .proton-logo-svg {
   width: 110px; height: 110px;
   margin: 0 auto 20px;  animation: rotateSlow 20s linear infinite;  
@@ -1040,6 +1163,20 @@ h1,h2,h3,h4 {
   margin-bottom: 12px;
 }
 
+.organizer-info-col p a {
+  color: var(--clr-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+  transition: color .2s var(--ease);
+}
+
+.organizer-info-col p a:hover,
+.organizer-info-col p a:focus-visible {
+  color: var(--clr-primary-l);
+}
+
 .organizer-social {
   display: flex;
   flex-wrap: wrap;
@@ -1070,10 +1207,25 @@ h1,h2,h3,h4 {
 
 /* ─── 13. FOOTER ──────────────────────────────────────────────── */
 .footer {
-  background: #050505;
+  background: var(--footer-bg);
   border-top: 1px solid rgba(255,255,255,.06);
   padding: 60px 0 0;
   color: rgba(255,255,255,.55);
+}
+
+body[data-theme='light'] .footer {
+  border-top: 1px solid rgba(15,23,42,.08);
+  color: rgba(15,23,42,.6);
+}
+
+body[data-theme='light'] .footer-col h4,
+body[data-theme='light'] .footer-logo {
+  color: var(--text);
+}
+
+body[data-theme='light'] .footer-col a,
+body[data-theme='light'] .footer-social a {
+  color: rgba(15,23,42,.6);
 }
 
 .footer-grid {
@@ -1246,8 +1398,9 @@ h1,h2,h3,h4 {
   .card-icon-side {
     flex-direction: column;
     align-items: flex-start;
-    padding: 20px 0 20px 20px;
-    width: 130px;
+    gap: 14px;
+    padding: 22px 26px 22px 22px;
+    width: 170px;
     flex-shrink: 0;
     border-right: 1px solid var(--glass-border);
   }
@@ -1255,7 +1408,7 @@ h1,h2,h3,h4 {
     flex-direction: row;
     align-items: stretch;
   }
-  .card-body { padding: 20px; }
+  .card-body { padding: 22px 24px; }
 }
 
 /* Tablet 768px */
@@ -1267,7 +1420,7 @@ h1,h2,h3,h4 {
 
   .organizer-card {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 48px;
   }
   .organizer-logo-col { flex-shrink: 0; width: 200px; }
@@ -1276,7 +1429,7 @@ h1,h2,h3,h4 {
 /* Desktop 1024px */
 @media (min-width: 1024px) {
   .events-grid { grid-template-columns: repeat(2, 1fr); }
-  .why-grid    { grid-template-columns: repeat(4, 1fr); }
+  .why-grid    { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 2fr 1fr 1fr; }
 }
 
