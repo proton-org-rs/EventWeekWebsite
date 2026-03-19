@@ -62,9 +62,15 @@ function updateProgress() {
 
 /* ─── 3. NAVBAR SCROLL EFFECT ────────────────────────────────── */
 const navbar  = document.getElementById('navbar');
+const navContainer = document.querySelector('.nav-container');
 const scrollTopBtn = document.getElementById('scroll-top');
 const scrollIndicator = document.querySelector('.scroll-indicator');
 let scrollHintDismissed = false;
+
+function getNavOffset(extra = 0) {
+  const navHeight = navContainer?.offsetHeight || 68;
+  return navHeight + extra;
+}
 
 function onScroll() {
   const y = window.scrollY;
@@ -101,12 +107,13 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     const target = document.querySelector(href);
     if (!target) return;
     e.preventDefault();
-    const offset = (navbar ? navbar.offsetHeight : 68) + 12;
+
+    // Close mobile menu first so expanded menu height never affects offsets
+    closeMobileMenu();
+
+    const offset = getNavOffset(12);
     const top = target.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: 'smooth' });
-
-    // Close mobile menu if open
-    closeMobileMenu();
   });
 });
 
@@ -115,7 +122,7 @@ const sections  = document.querySelectorAll('section[id], footer[id]');
 const navLinks  = document.querySelectorAll('.nav-link');
 
 function updateActiveLink() {
-  const offset = (navbar ? navbar.offsetHeight : 68) + 60;
+  const offset = getNavOffset(60);
   let current = '';
   sections.forEach(sec => {
     if (window.scrollY >= sec.offsetTop - offset) current = sec.id;
