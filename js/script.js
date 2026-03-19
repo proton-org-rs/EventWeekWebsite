@@ -158,7 +158,7 @@ function closeMobileMenu() {
 
 /* ─── 7. COUNTDOWN TIMER ─────────────────────────────────────── */
 // Target: first day of EventWeek — change this date as needed
-const EVENT_DATE = new Date('2026-03-23T18:00:00');
+const EVENT_DATE = new Date('2026-03-23T18:00:00+01:00'); // Europe/Belgrade (CET)
 
 const cdDays    = document.getElementById('cd-days');
 const cdHours   = document.getElementById('cd-hours');
