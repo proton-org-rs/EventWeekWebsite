@@ -822,6 +822,19 @@ body[data-theme='light'] .theme-btn .icon-sun { display: none; }
   color: var(--text-2);
 }
 
+.card-desc a {
+  color: var(--clr-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+
+.card-desc a:hover,
+.card-desc a:focus-visible {
+  color: var(--clr-primary-l);
+}
+
 /* Card action buttons */
 .card-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 4px; }
 
