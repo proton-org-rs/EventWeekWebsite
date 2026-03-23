@@ -167,6 +167,7 @@ const cdSeconds = document.getElementById('cd-seconds');
 const cdWrap    = document.getElementById('countdown-wrap');
 const cdLabel   = cdWrap?.querySelector('.countdown-label');
 const cdTimer   = document.getElementById('countdown');
+let cdInterval;
 
 function pad(n)   { return String(n).padStart(2, '0'); }
 
@@ -176,8 +177,8 @@ function updateCountdown() {
     if (cdLabel) cdLabel.textContent = 'Proton EventWeek je počeo!';
     if (cdTimer) cdTimer.style.display = 'none';
     [cdDays, cdHours, cdMinutes, cdSeconds].forEach(el => { if (el) el.textContent = '00'; });
-    clearInterval(cdInterval);
-    return;
+    if (cdInterval) clearInterval(cdInterval);
+    return false;
   }
   if (cdTimer) cdTimer.style.display = 'flex';
   const days    = Math.floor(diff / 86_400_000);
@@ -189,10 +190,13 @@ function updateCountdown() {
   if (cdHours)   cdHours.textContent   = pad(hours);
   if (cdMinutes) cdMinutes.textContent = pad(minutes);
   if (cdSeconds) cdSeconds.textContent = pad(seconds);
+
+  return true;
 }
 
-updateCountdown();
-const cdInterval = setInterval(updateCountdown, 1_000);
+if (updateCountdown()) {
+  cdInterval = setInterval(updateCountdown, 1_000);
+}
 
 /* ─── 8. PARALLAX — HERO SHAPES ─────────────────────────────── */
 const shapes = document.querySelectorAll('.hero .shape');
